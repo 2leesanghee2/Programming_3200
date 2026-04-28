@@ -1,5 +1,5 @@
 // https://programming-3200.ssep4u.workers.dev/
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import "./todolist.css"
 import Button from "./components/Button.jsx"
 import Checkbox from "./components/Checkbox.jsx"
@@ -16,8 +16,23 @@ class Todo {
     this.isCompleted = isCompleted;
   }
 }
+const TODOS_STORAGE_KEY = "todos";  //LocalStorage 용 key
+
 function TodoListApp() {
-  const [todos, setTodos] = useState([]);
+  const initTodos = () => {
+    //localStorage에서 가져오자
+    const savedTodos = localStorage.getItem(TODOS_STORAGE_KEY);
+    //값이 없으면 []
+    //값이 있으면 todos의 초기값 대입하자
+    return (!savedTodos) ? [] : JSON.parse(savedTodos); //string -> JSON 객체 또는 리스트
+  }
+  const [todos, setTodos] = useState(initTodos);
+  //todos 변경 시, LocalStorage에 todos 저장하자
+  useEffect(() => {
+    localStorage.setItem(TODOS_STORAGE_KEY, JSON.stringify(todos)); //JSON 객체 또는 리스트 -> string
+  }, [todos]);
+
+
   function addTodo(text) {
     //이전 todos에 newTodo 만들어서 추가하자 -> 그것을 setTodos() 하자
     setTodos((todos) => [
