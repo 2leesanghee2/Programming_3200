@@ -39,5 +39,5 @@ npm create vite@latest .
   <Link to="/"></Link>
   ```
 - `useNavigate()`
-- 3209윤시웅
--3214 장세은
+-	3210 이상희 날짜 표시, Date, 컴포넌트 렌더링
+
